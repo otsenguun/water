@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Plan;
+use App\Models\User;
 class HomeController extends Controller
 {
     /**
@@ -23,7 +24,21 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $date_arr = [];
+
+        $date = strtotime(date("Y-m-d"));
+
+       
+        for($i = 0; $i < 7; $i++){
+            
+            $date_arr[] = date("Y-m-d",$date);
+            $date += 86400;
+    
+        }
+
         $plans = Plan::paginate(100);
-        return view('home');
+        $users = User::where("type","0")->get();
+        // dd($date_arr);
+        return view('home',compact("users","date_arr"));
     }
 }

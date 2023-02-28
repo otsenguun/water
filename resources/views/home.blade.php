@@ -2,8 +2,6 @@
 
 @section('content')
 <div class="container">
-
-
 <a href="{{route('plan.create')}}" class="btn btn-primary">Захиалга бүртгэх</a>
 <a href="{{route('user.create')}}" class="btn btn-primary">Ажилтан бүртгэх</a>
 <hr>
@@ -20,11 +18,27 @@
                     @endif
                     <div class="table-responsive">
 
+                  
                         <table class="table">
                             <thead>
+                                <th>Ажилтан</th>
+                                @foreach($date_arr as $dd)
+                                    <th>{{$dd}}</th>
+                                @endforeach
 
                             </thead>
-
+                                <tbody>
+                                    @foreach($users as $user)
+                                    <tr>
+                                        <td>{{$user->name}}</td>
+                                        @foreach($date_arr as $dd)
+                                            <th>
+                                                <a href="{{url('createOrder',$user->id,$dd)}}" class="btn btn-success">Захиалга <span class="badge badge-primary"> <b>{{$user->orders($user->id,$dd)}}</b></span> </a>
+                                            </th>
+                                        @endforeach
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                         </table>
 
                     </div>
