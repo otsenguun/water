@@ -32,6 +32,7 @@
   </div>
   <input type="hidden" name="c_user" value=" {{ Auth::user()->id }}">
   <input type="hidden" name="d_user" value=" {{ $del->id }}">
+  <input type="hidden" name="d_date" value=" {{ $date }}">
   @csrf
   <hr>
   <div class="text-center"><input type="submit" value="Хадгалах"  class="btn btn-primary"></div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Models\User;
+use App\Models\Order;
 class orderController extends Controller
 {
     /**
@@ -46,7 +47,19 @@ class orderController extends Controller
      */
     public function store(Request $request)
     {  
-      dd($request);
+        // dd($request);
+        $order = new Order;
+        $order->phone = $request->phone;
+        $order->duureg = $request->duureg;
+        $order->address = $request->address;
+        $order->value = $request->value;
+        $order->info = $request->info;
+        $order->c_user = $request->c_user;
+        $order->d_user = $request->d_user;
+        $order->d_date = $request->d_date;
+        $order->save();
+
+        return redirect()->back();
     }
 
     /**

@@ -39,8 +39,8 @@ class HomeController extends Controller
         }
 
         $plans = Plan::paginate(100);
-        $users = User::where("type","0")->get();
-        // dd($date_arr);
+        $users = User::where("type",1)->get();
+        // dd($users);
         return view('home',compact("users","date_arr"));
     }
 }
