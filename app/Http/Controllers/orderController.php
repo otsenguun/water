@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\View;
+use App\Models\User;
 class orderController extends Controller
 {
     /**
@@ -21,9 +22,20 @@ class orderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id,$date)
     {
-        //
+        $duureg = [
+            0 => "Хан-уул",
+            1 => "Баянзүрх",
+            2 => "Баянгол",
+            3 => "Сонгино хайрхан",
+            4 => "Чингэлтэй",
+            5 => "Сүхбаатар",
+            6 => "Налайх"
+        ];
+        $del = User::find($id);
+
+        return View::make('order.render', ['del' => $del,"date" => $date,"duuregs" => $duureg]);
     }
 
     /**
@@ -33,8 +45,8 @@ class orderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {  
+      dd($request);
     }
 
     /**

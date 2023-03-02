@@ -22,6 +22,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+
+Route::get('/createOrder/{id}/{date}', [App\Http\Controllers\orderController::class, 'create']);
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('plan', planController::class);
 Route::resource('order', orderController::class);
