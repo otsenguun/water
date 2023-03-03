@@ -13,9 +13,19 @@ class orderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($duureg)
     {
-        //
+        $orders = Order::where("duureg",$duureg)->get();
+        $duureg = [
+            0 => "Хан-уул",
+            1 => "Баянзүрх",
+            2 => "Баянгол",
+            3 => "СХД",
+            4 => "Чингэлтэй",
+            5 => "Сүхбаатар",
+            6 => "Налайх"
+        ];
+        return view("order.list",['orders' => $orders,"duureg"=>$duureg]);
     }
 
     /**

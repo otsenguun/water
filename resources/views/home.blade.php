@@ -4,6 +4,7 @@
 <div class="container">
 <a href="{{route('plan.create')}}" class="btn btn-primary">Захиалга бүртгэх</a>
 <a href="{{route('user.create')}}" class="btn btn-primary">Ажилтан бүртгэх</a>
+<a href="{{url('show_list/0')}}" class="btn btn-primary">Захиалга жагсаалт</a>
 <hr>
     <div class="row justify-content-center">
         <div class="col-md-12">

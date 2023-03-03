@@ -23,7 +23,7 @@ Route::get('/', function () {
 Auth::routes();
 
 
-
+Route::get('/show_list/{duureg}', [App\Http\Controllers\orderController::class, 'index']);
 Route::get('/createOrder/{id}/{date}', [App\Http\Controllers\orderController::class, 'create']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
