@@ -16,17 +16,23 @@ use App\Http\Controllers\planController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
 
-Route::get('/show_list/{duureg}', [App\Http\Controllers\orderController::class, 'index']);
-Route::get('/createOrder/{id}/{date}', [App\Http\Controllers\orderController::class, 'create']);
+Route::get('/show_list', [App\Http\Controllers\orderController::class, 'index'])->middleware('auth');
+Route::get('/createOrder/{id}/{date}', [App\Http\Controllers\orderController::class, 'create'])->middleware('auth');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('plan', planController::class);
-Route::resource('order', orderController::class);
-Route::resource('user', userController::class);
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::resource('plan', planController::class)->middleware('auth');
+Route::resource('order', orderController::class)->middleware('auth');
+Route::resource('user', userController::class)->middleware('auth');
+
+Route::post('setIndex', [App\Http\Controllers\orderController::class, 'setIndex'])->middleware('auth');
+Route::post('confirmOrder', [App\Http\Controllers\orderController::class, 'confirmOrder'])->middleware('auth');
+
+Route::get('/searchOrder/{id}', [App\Http\Controllers\orderController::class, 'searchPhone'])->middleware('auth');
+Route::get('export-orders', [App\Http\Controllers\orderController::class, 'export'])->middleware('auth');

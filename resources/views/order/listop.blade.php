@@ -29,9 +29,21 @@
 <input type="hidden" name="duureg" value="{{$request->duureg}}">
 
 <div class="col-md-3">
+    <label for="">Хүргэх ажилтан</label>
+    <select name="d_user" id="" class="form-control">
+        <option value="">-бүгд-</option>
+        @foreach($users as $user)
+        <option value="{{$user->id}}" @if($request->d_user == $user->id) selected @endif>{{$user->name}}</option>
+        @endforeach
+    </select>
+</div>
+
+<div class="col-md-3">
     <label for="">Утасны дугаар</label>
     <input type="text" name="phone" class="form-control" value={{$request->phone}}>
 </div>
+
+
 <div class="col-md-3">
    
    
@@ -53,7 +65,9 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Хүргэлтүүд</div>
+                <div class="card-header">Хүргэлтүүд
+                   <a href="{{url('/')}}" class="btn btn-primary">Хүргэлт үүсгэх</a>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -67,6 +81,8 @@
                         <table class="table">
                             <thead>
                                 <th>№</th>
+                                    <th>Үүсгэсэн</th>
+                                    <th>Ажилтан</th>
                                     <th>Утасны дугаар</th>
                                     <th>Дүүрэг</th>
                                     <th>Хаяг</th>
@@ -81,6 +97,8 @@
                                     @foreach($orders as $key => $order)
                                     <tr class="index" data_id="{{$order->id}}">
                                         <td>{{$key+1}}</td>
+                                        <td>{{$order->user($order->c_user)->name}}</td>
+                                        <td>{{$order->user($order->d_user)->name}}</td>
                                         <td>{{$order->phone}}</td>
                                         <td>{{$duureg[$order->duureg]}}</td>
                                         <td>{{$order->address}}</td>
@@ -89,39 +107,31 @@
                                         <td>
 
                                             @if($order->status == 0)
-                                            <span class="btn btn-warning">Хүлээгдэж байна</span>
+                                            <span class="btn btn-warning btn-sm">Хүлээгдэж байна</span>
                                             @elseif($order->status == 1)
-                                            <span class="btn btn-success">Хүргэгдсэн {{$order->confirm_date}}</span>
+                                            <span class="btn btn-success btn-sm">Хүргэгдсэн</span>
                                             @else
-                                            <span class="btn btn-danger">Цуцлагдсан</span>
+                                            <span class="btn btn-danger btn-sm">Цуцлагдсан</span>
                                             @endif
                                           
                                             <!-- {{$order->status}} -->
                                         </td>
                                         <td>
                                             @if($order->payment == 0)
-                                            <span class="btn btn-danger">Төлөгдөөгүй</span>
+                                            <span class="btn btn-danger btn-sm">Төлөгдөөгүй</span>
                                             @elseif($order->payment == 1)
-                                            <span class="btn btn-success">Бэлэн</span>
+                                            <span class="btn btn-success btn-sm">Бэлэн</span>
                                             @elseif($order->payment == 2)
-                                            <span class="btn btn-primary">Данс</span>
+                                            <span class="btn btn-primary btn-sm">Данс</span>
                                             @else
-                                            <span class="btn btn-warning">Дараа төлөх</span>
+                                            <span class="btn btn-warning btn-sm">Дараа төлөх</span>
                                             @endif
                                         </td>
 
+
                                         <td>
-                                            <button 
-                                            order_id = "{{$order->id}}" 
-                                            phone="{{$order->phone}}" 
-                                            payment="{{$order->payment}}" 
-                                            status="{{$order->status}}" 
-                                            address="{{$order->address}}" 
-                                            duureg="{{$duureg[$order->duureg]}}" 
-                                            class="btn btn-sm btn-primary confirm">
-                                                Хадгалах
-                                            </button>
-                                            
+                                            <!-- <button class="btn btn-sm btn-primary confirm">Хадгалах</button> -->
+                                            <a class="btn btn-info btn-sm" href="{{route('order.show',$order->id)}}">Харах</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -147,33 +157,25 @@
         </button>
       </div>
       <div class="modal-body" id="order_body">
-            <form action="{{url('confirmOrder')}}" method="post">
-            @csrf
-            <input type="hidden" name="order_id">
-
-
-                <h5>Хүргэлтийн дугаар: <b id="order_id"></b></h5>
-                <h5>Утасны дугаар: <b id="phone"></b></h5>
-                <h5>Дүүрэг : <b id="duureg"></b></h5>
-                <h5>Хаяг: <b id="address"></b></h5>
+            <form action="" method="post">
                 <div class="mb-3">
                     <label for="">Тайлбар</label>
-                    <textarea id="confirm_info" class="form-control" name="confirm_info" id="" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" name="" id="" cols="30" rows="10">
+
+                    </textarea>
                 </div>
                 <div class="mb-3">
-                    <select name="status" id="" class="form-control">
-                    
-                        <option value="0" id="status_op_0">Хүлээгдэж байна</option>
-                        <option value="1" id="status_op_1">Хүргэгдсэн</option>
-                        <option value="2" id="status_op_2">Цуцлагдсан</option>
+                    <select name="" id="" class="form-control">
+                        <option value="0">Хүргэгдсэн</option>
+                        <option value="1">Цуцлагдсан</option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <select name="payment" id="" class="form-control">
-                        <option value="0" id="payment_op_0">Төлөгдөөгүй</option>
-                        <option value="1" id="payment_op_1">Бэлэн</option>
-                        <option value="2" id="payment_op_2">Данс</option>
-                        <option value="3" id="payment_op_3">Дараа төлөх</option>
+                    <select name="" id="" class="form-control">
+                        <option value="0">Данс</option>
+                        <option value="1">Данс</option>
+                        <option value="2">Бэлэн</option>
+                        <option value="3">Дараа төлөх</option>
                     </select>
                 </div>
                 <div class="text-center">
@@ -187,41 +189,42 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script> 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet"> 
-<script>
-$('tbody').sortable({
-    update: function( ) {
-        // console.log();
-        let index_arr = [];
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script> 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet">  -->
 
-        $( "tr.index" ).each(function( index ) {
-        // console.log( index + ": " + $( this ).text() );
-        // index_arr
-        index_arr.push($(this).attr("data_id"));
-        // console.log($(this).attr("data_id"));
-        });
+<script>
+// $('tbody').sortable({
+//     update: function( ) {
+//         // console.log();
+//         let index_arr = [];
+//         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+//         $( "tr.index" ).each(function( index ) {
+//         // console.log( index + ": " + $( this ).text() );
+//         // index_arr
+//         index_arr.push($(this).attr("data_id"));
+//         // console.log($(this).attr("data_id"));
+//         });
 
       
-            $.ajax({
-                /* the route pointing to the post function */
-                url: '/setIndex',
-                type: 'POST',
-                /* send the csrf-token and the input to the controller */
-                data: {_token: CSRF_TOKEN, index:index_arr},
-                dataType: 'JSON',
-                /* remind that 'data' is the response of the AjaxController */
-                success: function (data) { 
-                    // $(".writeinfo").append(data.msg); 
-                    console.log(data);
-                }
-            }); 
+//             $.ajax({
+//                 /* the route pointing to the post function */
+//                 url: '/setIndex',
+//                 type: 'POST',
+//                 /* send the csrf-token and the input to the controller */
+//                 data: {_token: CSRF_TOKEN, index:index_arr},
+//                 dataType: 'JSON',
+//                 /* remind that 'data' is the response of the AjaxController */
+//                 success: function (data) { 
+//                     // $(".writeinfo").append(data.msg); 
+//                     console.log(data);
+//                 }
+//             }); 
 
         
       
-    }
-});
+//     }
+// });
 </script>
 		
 
@@ -233,28 +236,10 @@ $('tbody').sortable({
         $("input[name ='duureg']").val(sd);
         $("#s_form").submit();
     });
+
     $(".confirm").click(function(){
-
-        let order_id = $(this).attr("order_id");
-        let phone = $(this).attr("phone");
-        let payment = $(this).attr("payment");
-        let status = $(this).attr("status");
-        let address = $(this).attr("address");
-        let duureg = $(this).attr("duureg");
-        let confirm_info = $(this).attr("confirm_info");
-
-
-        console.log(status);
-        $("b#order_id").html(order_id);
-        $("b#phone").html(phone);
-        $("b#duureg").html(duureg);
-        $("b#address").html(address);
-
-        $("input[name='order_id']").val(order_id);
-        $("#status_op_"+status).attr("selected","selected");
-        $("#payment_op_"+payment).attr("selected","selected");
-        $("#confirm_info").html(confirm_info);
-
+        let user = $(this).attr("user_id");
+        let date = $(this).attr("date");
         $('#myModal').modal('show'); 
     });
 

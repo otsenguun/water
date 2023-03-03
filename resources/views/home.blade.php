@@ -2,9 +2,15 @@
 
 @section('content')
 <div class="container">
-<a href="{{route('plan.create')}}" class="btn btn-primary">Захиалга бүртгэх</a>
+    <form action="{{url('export-orders')}}" method="get">
+        <input type="date" value="{{date('Y-m-d')}}" name="date1">
+        <input type="date" value="{{date('Y-m-d')}}" name="date2">
+        <button type="submit" class="btn btn-success">Тайлан татах</button>
+    </form>
+
+<hr>
 <a href="{{route('user.create')}}" class="btn btn-primary">Ажилтан бүртгэх</a>
-<a href="{{url('show_list/0')}}" class="btn btn-primary">Захиалга жагсаалт</a>
+<a href="{{url('show_list')}}" class="btn btn-primary">Захиалга жагсаалт</a>
 <hr>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -84,7 +90,38 @@
         $('#myModal').modal('show'); 
     });
 
-   
+    $(document).on( "keyup","#phones", function() {
+        let phone = $( this ).val();
+        if(phone.length >=6){
+            $.get("{{url('searchOrder')}}"+"/"+phone, function(data, status){
+            // alert("Data: " + data + "\nStatus: " + status);
+                // $("#order_body").html(data);
+             
+                let response = JSON.parse(data);
+                // console.log(response);
+                    $("#search_val").empty();
+                    let valhtml = "";
+                    $.each( response, function( index,value ){
+                        valhtml += "<li phone= '"+ index +"' duureg_key= '"+ value.duureg_key +"' address= '"+ value.address +"' class='list-group-item btn btn-sm btn-info set_info'>"+index +" : " + value.duureg + " :" + value.address + "</li>";
+                    });
+                    $("#search_val").html(valhtml);
+            });
+        }
+
+    });
+
+    $(document).on( "click",".set_info", function() {
+        let phone = $(this).attr("phone");
+        let duureg_key = $(this).attr("duureg_key");
+        let address = $(this).attr("address");
+        $("#search_val").empty();
+
+        console.log(address);
+        $("#dd_"+duureg_key).attr("selected","selected");
+        $("#phones").val(phone);
+        // $("select[name='duureg_key']").val(duureg_key);
+        $("#s_address").val(address);
+    });
 
 </script>
 @endsection
