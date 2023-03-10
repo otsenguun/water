@@ -49,7 +49,7 @@ class orderController extends Controller
      public function searchPhone($phone){
         $duureg = $this->duureg;
 
-        $order = Order::select("address","duureg","phone")
+        $order = Order::select("address","duureg","phone","payment")
         ->where('phone', 'like', '%' . $phone . '%')->orderBy("id","asc")->get(5);
         $response = [];
         foreach($order as $or){
@@ -57,6 +57,7 @@ class orderController extends Controller
                 "address" => $or->address,
                 "duureg" => $duureg[$or->duureg],
                 "duureg_key" => $or->duureg,
+                "payment" => $or->payment(),
             ];
             $response[$or->phone] = $obj;
         }

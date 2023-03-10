@@ -26,6 +26,21 @@
                         <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
+
+                    @if( Auth::user()->id == 1 )
+                    <div class="mb-3">
+                       
+                        <label for="exampleInputEmail1" class="form-label">Төрөл</label>
+                        <select name="type" id="" class="form-control">
+                            <option value="0">Оператор</option>
+                            <option value="1">Ажилтан</option>
+                        </select>
+                       
+                    </div>
+                    @else
+                    
+                    <input type="hidden" name="type" value="1">
+                    @endif
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
                         <input type="password" name="password" class="form-control" id="exampleInputPassword1">
@@ -34,7 +49,7 @@
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                     </div>
-                    <input type="hidden" name="type" value="1">
+                  
                     @csrf
                     <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

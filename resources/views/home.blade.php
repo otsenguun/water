@@ -102,7 +102,7 @@
                     $("#search_val").empty();
                     let valhtml = "";
                     $.each( response, function( index,value ){
-                        valhtml += "<li phone= '"+ index +"' duureg_key= '"+ value.duureg_key +"' address= '"+ value.address +"' class='list-group-item btn btn-sm btn-info set_info'>"+index +" : " + value.duureg + " :" + value.address + "</li>";
+                        valhtml += "<li phone= '"+ index +"' duureg_key= '"+ value.duureg_key +"' address= '"+ value.address +"' class='list-group-item btn btn-sm btn-info set_info'>"+index +" : " + value.duureg + " :" + value.address + ": "+value.payment +"</li>";
                     });
                     $("#search_val").html(valhtml);
             });
