@@ -23,9 +23,14 @@ use App\Http\Controllers\planController;
 Auth::routes();
 
 
+Route::get('/not_list', [App\Http\Controllers\orderController::class, 'indexNot'])->middleware('auth');
 Route::get('/show_list', [App\Http\Controllers\orderController::class, 'index'])->middleware('auth');
+Route::post('/change_date', [App\Http\Controllers\orderController::class, 'changeDate'])->middleware('auth');
 Route::get('/createOrder/{id}/{date}', [App\Http\Controllers\orderController::class, 'create'])->middleware('auth');
+Route::get('/createOrderD/{id}', [App\Http\Controllers\orderController::class, 'createD'])->middleware('auth');
 
+
+Route::post('setOrder', [App\Http\Controllers\orderController::class, 'setOrder'])->middleware('auth');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::resource('plan', planController::class)->middleware('auth');
 Route::resource('order', orderController::class)->middleware('auth');

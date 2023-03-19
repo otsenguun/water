@@ -26,7 +26,21 @@ class orderController extends Controller
         7 => "Хан-уул"
     ];
 
+    public function setOrder(Request $request){
 
+        $order = Order::find($request->order_id);
+        $order->d_user = Auth::user()->id;
+        $order->save();
+        return redirect()->back();
+
+    }
+
+    public function changeDate(Request $request){
+        $order = Order::find($request->order_id);
+        $order->d_date = $request->ch_date;
+        $order->save();
+        return redirect()->back();
+    }
     public function export(Request $request) 
     {
         $date1 = $request->date1;
@@ -88,14 +102,36 @@ class orderController extends Controller
         $duureg = $this->duureg;
         if(Auth::user()->type == 1){
             $orders = Order::where("d_user",Auth::user()->id)
-            ->withWhere($request->only('duureg','phone'))->where("d_date",$sdate)
+            ->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)
             ->orderBy('index', 'asc')->paginate(100);
             return view("order.list",['orders' => $orders,"duureg"=>$duureg,"request"=>$request]);
         }else{
             $users = User::select("id","name")->where("type",1)->get();
-            $orders = Order::withWhere($request->only('duureg','phone','d_user'))->where("d_date",$sdate)
+            $orders = Order::withWhere($request->only('duureg','phone','d_user',"status"))->where("d_date",$sdate)
             ->orderBy('index', 'asc')->paginate(100);
             return view("order.listop",['orders' => $orders,"duureg"=>$duureg,"request"=>$request,"users" => $users]);
+
+        }
+      
+    }
+    public function indexNot(Request $request)
+    {
+        $sdate = date("Y-m-d");
+        if(!is_null($request->d_date)){
+            $sdate = $request->d_date;
+            // dd($request->date);
+        }
+        $duureg = $this->duureg;
+        if(Auth::user()->type == 1){
+            $orders = Order::where("d_user",0)
+            ->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)
+            ->orderBy('index', 'asc')->paginate(100);
+            return view("order.notset",['orders' => $orders,"duureg"=>$duureg,"request"=>$request]);
+        }else{
+            $users = User::select("id","name")->where("d_user",0)->where("type",1)->get();
+            $orders = Order::withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)
+            ->orderBy('index', 'asc')->paginate(100);
+            return view("order.notset",['orders' => $orders,"duureg"=>$duureg,"request"=>$request,"users" => $users]);
 
         }
       
@@ -121,6 +157,21 @@ class orderController extends Controller
 
         return View::make('order.render', ['del' => $del,"date" => $date,"duuregs" => $duureg]);
     }
+    public function createD($s_duureg)
+    {
+        $duureg = [
+            1 => "Баянзүрх",
+            2 => "Баянгол",
+            3 => "Сонгино хайрхан",
+            4 => "Чингэлтэй",
+            5 => "Сүхбаатар",
+            6 => "Налайх",
+            7 => "Хан-уул"
+        ];
+        // $del = User::find($id);
+
+        return View::make('order.renderD', ['s_duureg' => $s_duureg,"duuregs" => $duureg]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -138,7 +189,7 @@ class orderController extends Controller
         $order->value = $request->value;
         $order->info = $request->info;
         $order->c_user = $request->c_user;
-        $order->d_user = $request->d_user;
+        $order->d_user = intval($request->d_user);
         $order->d_date = $request->d_date;
         $order->save();
 
@@ -175,7 +226,18 @@ class orderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $duuregs = [
+            1 => "Баянзүрх",
+            2 => "Баянгол",
+            3 => "Сонгино хайрхан",
+            4 => "Чингэлтэй",
+            5 => "Сүхбаатар",
+            6 => "Налайх",
+            7 => "Хан-уул"
+        ];
+        $users = User::where("type",1)->get();
+        $order = Order::find($id);
+        return view("order.edit",["duuregs" =>$duuregs,"users" => $users,"order"=>$order]);
     }
 
     /**
@@ -187,7 +249,16 @@ class orderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+
+        $order = Order::find($id);
+        $order->d_user = $request->d_user;
+        $order->phone = $request->phone;
+        $order->duureg = $request->duureg;
+        $order->address = $request->address;
+        $order->d_date = $request->d_date;
+        $order->save();
+        return redirect()->route("order.show",$order->id);
     }
 
     /**

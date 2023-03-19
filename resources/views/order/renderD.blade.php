@@ -1,8 +1,7 @@
 
 
 
-<h6>Ажилтан : <b>{{ $del->name}}</b>  </h6>
-<h6>Хүргэх дгноо : <b>{{ $date}}</b>  </h6>
+<h6>Шинэ захиалга  </h6>
 
 <form action="{{route('order.store')}}" method="post" autocomplete="off">
 
@@ -20,7 +19,7 @@
     <select class="form-control" id="exampleFormControlSelect1" name="duureg" required>
       <option value="">--Сонго--</option>
         @foreach($duuregs as $d_id => $duureg)
-            <option id="dd_{{$d_id}}" value="{{$d_id}}">{{$duureg}}</option>
+            <option @if($s_duureg == $d_id) selected @endif id="dd_{{$d_id}}" value="{{$d_id}}">{{$duureg}}</option>
         @endforeach
     </select>
   </div>
@@ -30,7 +29,7 @@
   </div>
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Хүргэх огноо</label>
-    <input type="date" name ="d_date" class="form-control" value="{{ $date }}">
+    <input type="date" name ="d_date" class="form-control" value="{{date('Y-m-d')}}">
   </div>
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Тоо/ш</label>
@@ -41,7 +40,6 @@
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name ="info"></textarea>
   </div>
   <input type="hidden" name="c_user" value=" {{ Auth::user()->id }}">
-  <input type="hidden" name="d_user" value=" {{ $del->id }}">
   @csrf
   <hr>
   <div class="text-center"><input type="submit" value="Хадгалах"  class="btn btn-primary"></div>

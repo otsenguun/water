@@ -8,12 +8,13 @@
     <div class="container">
 
 
-    <p class="my-5 mx-5" style="font-size: 30px;">Хүргэлтийн дэлгэрэнгүй</p>
         <div class="table-responsive">
-
+        <form action="{{route('order.update',$order->id)}}" method="post">
+        @csrf
+        {{ method_field('PUT') }}
             <table class="table">
                
-                    <th class="text-center" colspan=2>Захиалгийн мэдээлэл</th>
+                    <th class="text-center" colspan=2>Захиалга засах</th>
                 
             <tr>
                 <td align="right" width=200>Дугаар:</td>
@@ -21,7 +22,13 @@
             </tr>
             <tr>
                 <td align="right">Ажилтан:</td>
-                <td> {{$order->user($order->d_user)->name}}</td>
+                <td>
+                    <select name="d_user" id="" class="form-control">
+                        @foreach($users as $user)
+                            <option value="{{$user->id}}" @if($user->id == $order->d_user) selected @endif>{{$user->name}}</option>
+                        @endforeach    
+                    </select>
+                   </td>
             </tr>
             <tr>
                 <td align="right">Оператор:</td>
@@ -29,23 +36,35 @@
             </tr>
             <tr>
                 <td align="right">Утасны дугаар:</td>
-                <td> {{$order->phone}}</td>
+                <td>
+                    <input class="form-control" type="number" name="phone" value="{{$order->phone}}">
+                    </td>
             </tr>
             <tr>
                 <td align="right">Ус:</td>
-                <td> {{$order->value}}</td>
+                <td><input class="form-control" type="number" name="phone" value="{{$order->value}}"></td>
             </tr>
             <tr>
                 <td align="right">Дүүрэг:</td>
-                <td> {{$order->duureg()}}</td>
+                <td>
+                    <select class="form-control" name="duureg" id="">
+                        @foreach($duuregs as $d_key => $duureg)
+                            <option value="{{$d_key}}" @if($d_key == $order->duureg) selected @endif>{{$duureg}}</option>
+                        @endforeach  
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td align="right">Хаяг:</td>
-                <td>{{$order->address}}</td>
+                <td>
+                <textarea class="form-control" name="address" id="" cols="30" rows="3">{{$order->address}}</textarea>    
+               </td>
             </tr>
             <tr>
                 <td align="right">Тайлбар:</td>
-                <td>{{$order->info}}</td>
+                <td>
+                <textarea class="form-control"   name="address" id="" cols="30" rows="3">{{$order->info}}</textarea> 
+                </td>
             </tr>
             <tr>
                 <td align="right">Төлөв:</td>
@@ -53,7 +72,7 @@
             </tr>
             <tr>
                 <td align="right">Хүргэх огноо:</td>
-                <td> {{$order->d_date}}</td>
+                <td> <input name="d_date" type="date" class="form-control" value="{{$order->d_date}}"></td>
             </tr>
             
             <tr>
@@ -74,8 +93,11 @@
             </tr>
 
             </table>
-
-
+            <center>
+            <input type="submit" value="Хадгалах" class="btn btn-sm btn-success">
+            </center>
+           
+    </form>
         </div>
             <a class="btn btn-info" href="{{url('show_list')}}">Жагсаалт-руу буцах</a>
      

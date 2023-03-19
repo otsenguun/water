@@ -10,8 +10,7 @@
 <form action="" method="get" id="s_form">
 
 <div class="row">
-<a href="{{url('not_list')}}" class="btn btn-primary">Хувиарлаагүй жагсаалт</a>
-
+<a href="{{route('order.index')}}" class="btn btn-primary">Миний жагсаалт</a>
 <hr>
 <div class="row col-md-12">
 <div class="col-md-1">
@@ -32,16 +31,6 @@
 <input type="hidden" name="duureg" value="{{$request->duureg}}">
 
 <div class="col-md-3">
-    <label for="">Хүргэх ажилтан</label>
-    <select name="d_user" id="" class="form-control">
-        <option value="">-бүгд-</option>
-        @foreach($users as $user)
-        <option value="{{$user->id}}" @if($request->d_user == $user->id) selected @endif>{{$user->name}}</option>
-        @endforeach
-    </select>
-</div>
-
-<div class="col-md-3">
     <label for="">Төлөв</label>
     <select name="status" id="" class="form-control">
         <option value="">-бүгд-</option>
@@ -55,8 +44,6 @@
     <label for="">Утасны дугаар</label>
     <input type="text" name="phone" class="form-control" value={{$request->phone}}>
 </div>
-
-
 <div class="col-md-3">
    
    
@@ -78,9 +65,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Хүргэлтүүд
-                   <a href="{{url('/')}}" class="btn btn-primary">Хүргэлт үүсгэх</a>
-                </div>
+                <div class="card-header">Хувиарлаагүй Хүргэлтүүд</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -94,8 +79,6 @@
                         <table class="table">
                             <thead>
                                 <th>№</th>
-                                    <th>Үүсгэсэн</th>
-                                    <th>Ажилтан</th>
                                     <th>Утасны дугаар</th>
                                     <th>Дүүрэг</th>
                                     <th>Хаяг</th>
@@ -110,8 +93,6 @@
                                     @foreach($orders as $key => $order)
                                     <tr class="index" data_id="{{$order->id}}">
                                         <td>{{$key+1}}</td>
-                                        <td>{{$order->user($order->c_user)->name}}</td>
-                                        <td>{{$order->user($order->d_user)->name}}</td>
                                         <td>{{$order->phone}}</td>
                                         <td>{{$duureg[$order->duureg]}}</td>
                                         <td>{{$order->address}}</td>
@@ -120,32 +101,39 @@
                                         <td>
 
                                             @if($order->status == 0)
-                                            <span class="btn btn-warning btn-sm">Хүлээгдэж байна</span>
+                                            <span class="btn btn-warning">Хүлээгдэж байна</span>
                                             @elseif($order->status == 1)
-                                            <span class="btn btn-success btn-sm">Хүргэгдсэн</span>
+                                            <span class="btn btn-success">Хүргэгдсэн {{$order->confirm_date}}</span>
                                             @else
-                                            <span class="btn btn-danger btn-sm">Цуцлагдсан</span>
+                                            <span class="btn btn-danger">Цуцлагдсан</span>
                                             @endif
                                           
                                             <!-- {{$order->status}} -->
                                         </td>
                                         <td>
                                             @if($order->payment == 0)
-                                            <span class="btn btn-danger btn-sm">Төлөгдөөгүй</span>
+                                            <span class="btn btn-danger">Төлөгдөөгүй</span>
                                             @elseif($order->payment == 1)
-                                            <span class="btn btn-success btn-sm">Бэлэн</span>
+                                            <span class="btn btn-success">Бэлэн</span>
                                             @elseif($order->payment == 2)
-                                            <span class="btn btn-primary btn-sm">Данс</span>
+                                            <span class="btn btn-primary">Данс</span>
                                             @else
-                                            <span class="btn btn-warning btn-sm">Дараа төлөх</span>
+                                            <span class="btn btn-warning">Дараа төлөх</span>
                                             @endif
                                         </td>
 
-
                                         <td>
-                                            <button data_id="{{$order->id}}" class="btn btn-sm btn-primary changedate">Огноо солих</button>
-                                            <a class="btn btn-info btn-sm" href="{{route('order.edit',$order->id)}}">Засах</a>
-                                            <a class="btn btn-info btn-sm" href="{{route('order.show',$order->id)}}">Харах</a>
+                                            <button 
+                                            order_id = "{{$order->id}}" 
+                                            phone="{{$order->phone}}" 
+                                            payment="{{$order->payment}}" 
+                                            status="{{$order->status}}" 
+                                            address="{{$order->address}}" 
+                                            duureg="{{$duureg[$order->duureg]}}" 
+                                            class="btn btn-sm btn-primary confirm">
+                                                Сонгох
+                                            </button>
+                                            
                                         </td>
                                     </tr>
                                     @endforeach
@@ -160,38 +148,28 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
+
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Захиалга батлах</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Захиалга хүлээж авах</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" id="order_body">
-            <form action="" method="post">
-                <div class="mb-3">
-                    <label for="">Тайлбар</label>
-                    <textarea class="form-control" name="" id="" cols="30" rows="10">
+            <form action="{{url('setOrder')}}" method="post">
+            @csrf
+            <input type="hidden" name="order_id">
 
-                    </textarea>
-                </div>
-                <div class="mb-3">
-                    <select name="" id="" class="form-control">
-                        <option value="0">Хүргэгдсэн</option>
-                        <option value="1">Цуцлагдсан</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <select name="" id="" class="form-control">
-                        <option value="0">Данс</option>
-                        <option value="1">Данс</option>
-                        <option value="2">Бэлэн</option>
-                        <option value="3">Дараа төлөх</option>
-                    </select>
-                </div>
+
+                <h5>Хүргэлтийн дугаар: <b id="order_id"></b></h5>
+                <h5>Утасны дугаар: <b id="phone"></b></h5>
+                <h5>Дүүрэг : <b id="duureg"></b></h5>
+                <h5>Хаяг: <b id="address"></b></h5>
+
                 <div class="text-center">
                     <input type="submit" class="btn btn-sm" value="Хадгалах">
                 </div>
@@ -203,61 +181,30 @@
   </div>
 </div>
 
-
-<div class="modal fade" id="changedate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Хүргэх өдөр солих</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="date_body">
-        <form action="{{url('/change_date')}}" method="post">
-            <label for="">Огноо</label>
-            @csrf
-            <input type="date" name="ch_date" class="form-control" value="{{date('Y-m-d')}}">
-            <input type="hidden" value="" name="order_id" id="ch_order_id">
-            <input type="submit" value = "Хадгалах">
-        </form>
-      
-      </div>
-     
-    </div>
-  </div>
-</div>
-
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script> 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet">  -->
-
 <script>
+      $(".confirm").click(function(){
 
-$(".changedate").click(function(){
-        let orderid = $(this).attr("data_id");
-        $("#ch_order_id").val(orderid);
-        // console.log("asdasd");
-        $('#changedate').modal('show'); 
-    })
-</script>
-		
+        let order_id = $(this).attr("order_id");
+        let phone = $(this).attr("phone");
+        let payment = $(this).attr("payment");
+        let status = $(this).attr("status");
+        let address = $(this).attr("address");
+        let duureg = $(this).attr("duureg");
+        let confirm_info = $(this).attr("confirm_info");
 
 
-<script>
 
-    $(".d_button").click(function(){
-        let sd = $(this).attr("data_id");
-        $("input[name ='duureg']").val(sd);
-        $("#s_form").submit();
-    });
+        $("b#order_id").html(order_id);
+        $("b#phone").html(phone);
+        $("b#duureg").html(duureg);
+        $("b#address").html(address);
 
-    $(".confirm").click(function(){
-        let user = $(this).attr("user_id");
-        let date = $(this).attr("date");
+        $("input[name='order_id']").val(order_id);
+        $("#status_op_"+status).attr("selected","selected");
+        $("#payment_op_"+payment).attr("selected","selected");
+        $("#confirm_info").html(confirm_info);
+
         $('#myModal').modal('show'); 
-    });
-
-   
-
+        });
 </script>
 @endsection

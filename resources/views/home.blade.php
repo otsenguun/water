@@ -10,8 +10,13 @@
 
 <hr>
 <a href="{{route('user.create')}}" class="btn btn-primary">Ажилтан бүртгэх</a>
+<a href="{{route('user.index')}}" class="btn btn-primary">Ажилтны жагсаалт</a>
 <a href="{{url('show_list')}}" class="btn btn-primary">Захиалга жагсаалт</a>
+<a href="{{url('not_list')}}" class="btn btn-primary">Хувиарлаагүй жагсаалт</a>
 <hr>
+@foreach($duureg as $d_key => $dg)
+<button class="btn btn-primary duureg_create" data_id= "{{$d_key}}"> {{$dg}} </button>
+@endforeach
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -59,6 +64,9 @@
     </div>
 </div>
 <!-- Modal -->
+
+
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -77,6 +85,18 @@
 </div>
 <script>
 
+    $(".duureg_create").click(function(){
+        let duureg = $(this).attr("data_id");
+
+        $.get("{{url('createOrderD')}}"+"/"+duureg, function(data, status){
+            // alert("Data: " + data + "\nStatus: " + status);
+            $("#order_body").html(data);
+            // console.log(data);
+        });
+
+        $('#myModal').modal('show'); 
+    });
+   
     $(".order").click(function(){
         let user = $(this).attr("user_id");
         let date = $(this).attr("date");

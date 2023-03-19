@@ -10,9 +10,14 @@
 <form action="" method="get" id="s_form">
 
 <div class="row">
+<a href="{{url('not_list')}}" class="btn btn-primary">Хувиарлаагүй жагсаалт</a>
+
+<hr>
 <div class="row col-md-12">
 <div class="col-md-1">
   
+
+
   <button class="btn btn-primary d_button" type="button" data_id ="">
         Бүгд
   </button>
@@ -27,6 +32,16 @@
     @endforeach
 </div>
 <input type="hidden" name="duureg" value="{{$request->duureg}}">
+
+<div class="col-md-3">
+    <label for="">Төлөв</label>
+    <select name="status" id="" class="form-control">
+        <option value="">-бүгд-</option>
+        <option value="0" @if($request->status == "0") selected @endif>Хүлээгдэж байна</option>
+        <option value="1" @if($request->status == 1) selected @endif>Хүргэгдсэн</option>
+        <option value="2" @if($request->status == 2) selected @endif>Цуцлагдсан</option>
+    </select>
+</div>
 
 <div class="col-md-3">
     <label for="">Утасны дугаар</label>

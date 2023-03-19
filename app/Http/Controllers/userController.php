@@ -14,7 +14,8 @@ class userController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::paginate(30);
+        return view("user.list",["users" => $users]);
     }
 
     /**
@@ -66,7 +67,8 @@ class userController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::Find($id);
+        return view("user.edit",["user"=>$user]);
     }
 
     /**
@@ -78,7 +80,16 @@ class userController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+
+        $user = User::find($id);
+        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->password = Hash::make($request->password);
+        $user->type = $request->type;
+        $user->save();
+
+        return redirect()->route("user.index");
     }
 
     /**
