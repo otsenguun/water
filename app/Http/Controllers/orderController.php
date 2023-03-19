@@ -128,8 +128,8 @@ class orderController extends Controller
             ->orderBy('index', 'asc')->paginate(100);
             return view("order.notset",['orders' => $orders,"duureg"=>$duureg,"request"=>$request]);
         }else{
-            $users = User::select("id","name")->where("d_user",0)->where("type",1)->get();
-            $orders = Order::withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)
+            $users = User::select("id","name")->where("type",1)->get();
+            $orders = Order::where("d_user",0)->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)
             ->orderBy('index', 'asc')->paginate(100);
             return view("order.notset",['orders' => $orders,"duureg"=>$duureg,"request"=>$request,"users" => $users]);
 
