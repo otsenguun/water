@@ -64,7 +64,7 @@ class orderController extends Controller
         $duureg = $this->duureg;
 
         $order = Order::select("address","duureg","phone","payment")
-        ->where('phone', 'like', '%' . $phone . '%')->orderBy("id","asc")->get(5);
+        ->where('phone', 'like', '%' . $phone . '%')->orderBy("id","desc")->get(5);
         $response = [];
         foreach($order as $or){
             $obj = [
