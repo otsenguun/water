@@ -125,6 +125,7 @@
                                         </td>
 
                                         <td>
+                                            @if(Auth::user()->type == 1)
                                             <button 
                                             order_id = "{{$order->id}}" 
                                             phone="{{$order->phone}}" 
@@ -135,6 +136,7 @@
                                             class="btn btn-sm btn-primary confirm">
                                                 Сонгох
                                             </button>
+                                            @endif
                                             
                                         </td>
                                     </tr>
@@ -208,5 +210,11 @@
 
         $('#myModal').modal('show'); 
         });
+
+        $(".d_button").click(function(){
+        let sd = $(this).attr("data_id");
+        $("input[name ='duureg']").val(sd);
+        $("#s_form").submit();
+    });
 </script>
 @endsection
