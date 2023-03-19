@@ -83,6 +83,7 @@
                                     <th>Дүүрэг</th>
                                     <th>Хаяг</th>
                                     <th>Усны тоо</th>
+                                    <th>Тайлбар</th>
                                     <th>Хүргэх огноо</th>
                                     <th>Төлөв</th>
                                     <th>Төлбөр</th>
@@ -97,6 +98,7 @@
                                         <td>{{$duureg[$order->duureg]}}</td>
                                         <td>{{$order->address}}</td>
                                         <td>{{$order->value}}</td>
+                                        <td>{{$order->info}}</td>
                                         <td>{{$order->d_date}}</td>
                                         <td>
 
