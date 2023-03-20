@@ -4,6 +4,16 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 
+
+<style>
+    td.cursor{
+        background-color:#ccc;
+    }
+    .d_button{
+        width: 100px;
+        margin:5px;
+    }
+</style>
 <div class="container">
 
 
@@ -14,21 +24,13 @@
 
 <hr>
 <div class="row col-md-12">
-<div class="col-md-1">
-  
-
-
   <button class="btn btn-primary d_button" type="button" data_id ="">
         Бүгд
   </button>
- </div>
     @foreach($duureg as $key => $dd)
-    <div class="col-md-1">
-  
      <button class="btn btn-primary d_button" type="button" data_id ="{{$key}}" @if($request->duureg == $key) disabled @endif>
             {{$dd}}
      </button>
-    </div>
     @endforeach
 </div>
 <input type="hidden" name="duureg" value="{{$request->duureg}}">
@@ -96,7 +98,7 @@
                                 <tbody>
                                     @foreach($orders as $key => $order)
                                     <tr class="index" data_id="{{$order->id}}">
-                                        <td>{{$key+1}}</td>
+                                        <td class="cursor">{{$key+1}}</td>
                                         <td>{{$order->phone}}</td>
                                         <td>{{$duureg[$order->duureg]}}</td>
                                         <td>{{$order->address}}</td>
@@ -206,8 +208,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script> 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet"> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 $('tbody').sortable({
+    handle: ".cursor",
     update: function( ) {
         // console.log();
         let index_arr = [];
@@ -239,6 +243,7 @@ $('tbody').sortable({
       
     }
 });
+// $("tbody").disableSelection();
 </script>
 		
 
