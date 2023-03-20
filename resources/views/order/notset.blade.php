@@ -6,6 +6,12 @@
 
 <div class="container">
 
+<style>
+      .d_button{
+        width: 100px;
+        margin:5px;
+    }
+</style>
 
 <form action="" method="get" id="s_form">
 
@@ -13,19 +19,19 @@
 <a href="{{route('order.index')}}" class="btn btn-primary">Миний жагсаалт</a>
 <hr>
 <div class="row col-md-12">
-<div class="col-md-1">
+
   
   <button class="btn btn-primary d_button" type="button" data_id ="">
         Бүгд
   </button>
- </div>
+
     @foreach($duureg as $key => $dd)
-    <div class="col-md-1">
+ 
   
      <button class="btn btn-primary d_button" type="button" data_id ="{{$key}}" @if($request->duureg == $key) disabled @endif>
             {{$dd}}
      </button>
-    </div>
+
     @endforeach
 </div>
 <input type="hidden" name="duureg" value="{{$request->duureg}}">

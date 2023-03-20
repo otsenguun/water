@@ -98,7 +98,7 @@
                                 <tbody>
                                     @foreach($orders as $key => $order)
                                     <tr class="index" data_id="{{$order->id}}">
-                                        <td class="cursor">{{$key+1}}</td>
+                                        <td class="cursor"><+></td>
                                         <td>{{$order->phone}}</td>
                                         <td>{{$duureg[$order->duureg]}}</td>
                                         <td>{{$order->address}}</td>
