@@ -36,6 +36,17 @@
     <input type="number" name ="value" class="form-control">
   </div>
   <div class="form-group">
+    <label for="exampleFormControlTextarea1">Төлбөр</label>
+        <select name="payment" id="" class="form-control">
+            <option value="0" id="payment_op_0">Төлөгдөөгүй</option>
+            <option value="1" id="payment_op_1">Бэлэн</option>
+            <option value="2" id="payment_op_2">Данс</option>
+            <option value="3" id="payment_op_3">Дараа төлөх</option>
+            <option value="4" id="payment_op_4">Урьдчилсан</option>
+        </select>
+    <!-- <input type="number" name ="value" class="form-control"> -->
+  </div>
+  <div class="form-group">
     <label for="exampleFormControlTextarea1">Захиалгын тухай</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name ="info"></textarea>
   </div>

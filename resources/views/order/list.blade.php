@@ -124,8 +124,10 @@
                                             <span class="btn btn-success">Бэлэн</span>
                                             @elseif($order->payment == 2)
                                             <span class="btn btn-primary">Данс</span>
-                                            @else
+                                            @elseif($oder->payment == 3)
                                             <span class="btn btn-warning">Дараа төлөх</span>
+                                            @elseif($order->payment == 4)
+                                            <span class="btn btn-success">Урьдчилсан</span>
                                             @endif
                                         </td>
 
@@ -193,6 +195,7 @@
                         <option value="1" id="payment_op_1">Бэлэн</option>
                         <option value="2" id="payment_op_2">Данс</option>
                         <option value="3" id="payment_op_3">Дараа төлөх</option>
+                        <option value="4" id="payment_op_4">Урьдчилсан</option>
                     </select>
                 </div>
                 <div class="text-center">

@@ -125,8 +125,10 @@
                                             <span class="btn btn-success">Бэлэн</span>
                                             @elseif($order->payment == 2)
                                             <span class="btn btn-primary">Данс</span>
-                                            @else
+                                            @elseif($order->payment == 3)
                                             <span class="btn btn-warning">Дараа төлөх</span>
+                                            @elseif($order->payment == 4)
+                                            <span class="btn btn-success">Урьдчилсан</span>
                                             @endif
                                         </td>
 
