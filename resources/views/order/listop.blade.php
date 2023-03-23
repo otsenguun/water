@@ -78,8 +78,9 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Хүргэлтүүд
-                   <a href="{{url('/')}}" class="btn btn-primary">Хүргэлт үүсгэх</a>
+                <div class="card-header info">
+
+                  
                 </div>
 
                 <div class="card-body">
@@ -116,7 +117,7 @@
                                         <td>{{$order->phone}}</td>
                                         <td>{{$duureg[$order->duureg]}}</td>
                                         <td>{{$order->address}}</td>
-                                        <td>{{$order->value}}</td>
+                                        <td class="values">{{$order->value}}</td>
                                         <td>{{$order->info}}</td>
                                         <td>{{$order->d_date}}</td>
                                         <td>
@@ -236,6 +237,19 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet">  -->
 
 <script>
+
+$(document).ready(function(){
+    let total_val = 0;
+    let count = 0;
+        $( ".values" ).each(function( index ) {
+    //    console.log("asdasd");
+            let value = parseInt($(this).html());
+            // console.log(value);
+            total_val += value;
+            count++;
+        });
+        $(".info").html("Захиага тоо :<b> "+count+"</b> Усний тоо :<b> "+total_val+"</b>")
+    });
 
 $(".changedate").click(function(){
         let orderid = $(this).attr("data_id");

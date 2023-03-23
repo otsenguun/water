@@ -71,7 +71,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Хувиарлаагүй Хүргэлтүүд</div>
+                <div class="card-header info">Хувиарлаагүй Хүргэлтүүд</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -103,7 +103,7 @@
                                         <td>{{$order->phone}}</td>
                                         <td>{{$duureg[$order->duureg]}}</td>
                                         <td>{{$order->address}}</td>
-                                        <td>{{$order->value}}</td>
+                                        <td class="values">{{$order->value}}</td>
                                         <td>{{$order->info}}</td>
                                         <td>{{$order->d_date}}</td>
                                         <td>
@@ -194,6 +194,19 @@
 </div>
 
 <script>
+    $(document).ready(function(){
+    let total_val = 0;
+    let count = 0;
+        $( ".values" ).each(function( index ) {
+    //    console.log("asdasd");
+            let value = parseInt($(this).html());
+            // console.log(value);
+            total_val += value;
+            count++;
+        });
+        $(".info").html("Захиага тоо :<b> "+count+"</b> Усний тоо :<b> "+total_val+"</b>")
+    });
+
       $(".confirm").click(function(){
 
         let order_id = $(this).attr("order_id");
