@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\planController;
+use App\Http\Controllers\LogController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +24,7 @@ use App\Http\Controllers\planController;
 Auth::routes();
 
 
+
 Route::get('/not_list', [App\Http\Controllers\orderController::class, 'indexNot'])->middleware('auth');
 Route::get('/show_list', [App\Http\Controllers\orderController::class, 'index'])->middleware('auth');
 Route::post('/change_date', [App\Http\Controllers\orderController::class, 'changeDate'])->middleware('auth');
@@ -35,6 +37,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::resource('plan', planController::class)->middleware('auth');
 Route::resource('order', orderController::class)->middleware('auth');
 Route::resource('user', userController::class)->middleware('auth');
+Route::resource('log', LogController::class)->middleware('auth');
 
 Route::post('setIndex', [App\Http\Controllers\orderController::class, 'setIndex'])->middleware('auth');
 Route::post('confirmOrder', [App\Http\Controllers\orderController::class, 'confirmOrder'])->middleware('auth');

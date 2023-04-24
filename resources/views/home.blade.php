@@ -13,6 +13,7 @@
 <a href="{{route('user.index')}}" class="btn btn-primary">Ажилтны жагсаалт</a>
 <a href="{{url('show_list')}}" class="btn btn-primary">Захиалга жагсаалт</a>
 <a href="{{url('not_list')}}" class="btn btn-primary">Хувиарлаагүй жагсаалт</a>
+<a href="{{route('log.index')}}" class="btn btn-warning">Программын түүх</a>
 <hr>
 @foreach($duureg as $d_key => $dg)
 <button class="btn btn-primary duureg_create" data_id= "{{$d_key}}"> {{$dg}} </button>

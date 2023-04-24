@@ -42,7 +42,7 @@
             </tr>
             <tr>
                 <td align="right">Ус:</td>
-                <td><input class="form-control" type="number" name="phone" value="{{$order->value}}"></td>
+                <td><input class="form-control" type="number" name="value" value="{{$order->value}}"></td>
             </tr>
             <tr>
                 <td align="right">Дүүрэг:</td>

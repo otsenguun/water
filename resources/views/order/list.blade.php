@@ -13,6 +13,8 @@
         width: 100px;
         margin:5px;
     }
+   
+ 
 </style>
 <div class="container">
 
@@ -108,26 +110,26 @@
                                         <td>
 
                                             @if($order->status == 0)
-                                            <span class="btn btn-warning">Хүлээгдэж байна</span>
+                                            <span class="btn btn-sm btn-warning">Хүлээгдэж байна</span>
                                             @elseif($order->status == 1)
-                                            <span class="btn btn-success">Хүргэгдсэн {{$order->confirm_date}}</span>
+                                            <span class="btn btn-sm btn-success">Хүргэгдсэн {{$order->confirm_date}}</span>
                                             @else
-                                            <span class="btn btn-danger">Цуцлагдсан</span>
+                                            <span class="btn btn-sm btn-danger">Цуцлагдсан</span>
                                             @endif
                                           
                                             <!-- {{$order->status}} -->
                                         </td>
                                         <td>
                                             @if($order->payment == 0)
-                                            <span class="btn btn-danger">Төлөгдөөгүй</span>
+                                            <span class="btn btn-sm btn-danger">Төлөгдөөгүй</span>
                                             @elseif($order->payment == 1)
-                                            <span class="btn btn-success">Бэлэн</span>
+                                            <span class="btn btn-sm btn-success">Бэлэн</span>
                                             @elseif($order->payment == 2)
-                                            <span class="btn btn-primary">Данс</span>
-                                            @elseif($oder->payment == 3)
-                                            <span class="btn btn-warning">Дараа төлөх</span>
+                                            <span class="btn btn-sm btn-primary">Данс</span>
+                                            @elseif($order->payment == 3)
+                                            <span class="btn btn-sm btn-warning">Дараа төлөх</span>
                                             @elseif($order->payment == 4)
-                                            <span class="btn btn-success">Урьдчилсан</span>
+                                            <span class="btn btn-sm btn-success">Урьдчилсан</span>
                                             @endif
                                         </td>
 

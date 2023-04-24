@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\OrdersExport;
 class orderController extends Controller
@@ -31,14 +32,36 @@ class orderController extends Controller
         $order = Order::find($request->order_id);
         $order->d_user = Auth::user()->id;
         $order->save();
+
+        $log = new Log;
+        $log->c_user = Auth::user()->id;
+        $log->type = 0;
+        $log->data = json_encode($request);
+        $log->save();
         return redirect()->back();
 
     }
 
     public function changeDate(Request $request){
+
+        $old = Order::find($request->order_id);
         $order = Order::find($request->order_id);
+       
+
         $order->d_date = $request->ch_date;
         $order->save();
+        
+        $new = $order;
+
+        $log = new Log;
+        $log->c_user = Auth::user()->id;
+        $log->type = 1;
+        $data = [
+            "old" => $old,
+            "new" => $new
+        ];
+        $log->data = json_encode($data);
+        $log->save();
         return redirect()->back();
     }
     public function export(Request $request) 
@@ -56,6 +79,12 @@ class orderController extends Controller
         $order->confirm_info = $request->confirm_info;
         $order->confirm_date = date("Y-m-d h:i:s");
         $order->save();
+
+        $log = new Log;
+        $log->c_user = Auth::user()->id;
+        $log->type = 2;
+        $log->data = json_encode($order);
+        $log->save();
 
         return redirect()->back();        
     }
@@ -194,6 +223,13 @@ class orderController extends Controller
         $order->payment = $request->payment;
         $order->save();
 
+
+        $log = new Log;
+        $log->c_user = Auth::user()->id;
+        $log->type = 3;
+        $log->data = json_encode($order);
+        $log->save();
+
         return redirect('/');
     }
 
@@ -251,14 +287,31 @@ class orderController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request);
+        $old = Order::find($id);
 
         $order = Order::find($id);
-        $order->d_user = $request->d_user;
+      
+
+        $order->d_user = intval($request->d_user);
         $order->phone = $request->phone;
         $order->duureg = $request->duureg;
         $order->address = $request->address;
+        $order->value = $request->value;
         $order->d_date = $request->d_date;
+        $new = $order;
         $order->save();
+
+        $log = new Log;
+        $log->c_user = Auth::user()->id;
+        $log->type = 4;
+        $data = [
+            "old" => $old,
+            "new" => $new
+        ];
+        $log->data = json_encode($data);
+        $log->save();
+
+
         return redirect()->route("order.show",$order->id);
     }
 
