@@ -20,6 +20,9 @@
    .custom_table button{
         font-size: 10px;
    }
+   .custom_table span{
+        font-size: 10px;
+   }
  
 </style>
 <div class="container">
