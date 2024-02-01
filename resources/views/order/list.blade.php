@@ -101,7 +101,7 @@
                                     <th>Усны тоо</th>
                                     <th style="min-width: 300px">Тайлбар</th>
                                     <th style="min-width: 100px">Хүргэх огноо</th>
-                                    <th style="min-width: 200px">Төлөв</th>
+                                    <th style="min-width: 250px">Төлөв</th>
                                     <th>Төлбөр</th>
                                     <th>#</th>
 
