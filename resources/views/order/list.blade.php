@@ -17,7 +17,7 @@
         font-size: 11px;
         line-height: 10px;
    }
-   .custom_table{
+   .custom_table button{
         font-size: 10px;
    }
  
