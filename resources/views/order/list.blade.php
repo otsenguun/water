@@ -13,7 +13,13 @@
         width: 100px;
         margin:5px;
     }
-   
+   .custom_table{
+        font-size: 11px;
+        line-height: 10px;
+   }
+   .custom_table{
+        font-size: 10px;
+   }
  
 </style>
 <div class="container">
@@ -83,7 +89,7 @@
                     <div class="table-responsive">
 
                   
-                        <table class="table">
+                        <table class="table custom_table">
                             <thead>
                                 <th>№</th>
                                     <th>Утасны дугаар</th>
