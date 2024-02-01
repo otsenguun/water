@@ -88,11 +88,11 @@
                                 <th>№</th>
                                     <th>Утасны дугаар</th>
                                     <th>Дүүрэг</th>
-                                    <th>Хаяг</th>
+                                    <th style="min-width: 300px">Хаяг</th>
                                     <th>Усны тоо</th>
-                                    <th>Тайлбар</th>
-                                    <th>Хүргэх огноо</th>
-                                    <th>Төлөв</th>
+                                    <th style="min-width: 300px">Тайлбар</th>
+                                    <th style="min-width: 100px">Хүргэх огноо</th>
+                                    <th style="min-width: 200px">Төлөв</th>
                                     <th>Төлбөр</th>
                                     <th>#</th>
 
