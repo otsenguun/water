@@ -27,6 +27,43 @@ class orderController extends Controller
         7 => "Хан-уул"
     ];
 
+
+    public function showOrderProcess($phone){
+        
+        $finds = Order::select("d_user","d_date",)
+        ->where('phone', 'like', '%' . $phone . '%')->where('status',0)->orderBy("id","desc")->get(1);
+
+        if(count($finds) > 0){
+
+            $orders = Order::select("*")
+            ->where('d_user',$finds[0]->d_user)
+            ->where('d_date',$finds[0]->d_date)
+            ->orderBy("index","asc")->get(50);
+            
+            $huleelt = 0;
+
+            foreach($orders as $order){
+                if($order->phone == $phone){
+                    break;
+                }elseif($order->status == 0){
+                    $huleelt ++;
+                }
+            }
+
+            if($huleelt == 0){
+                $title = "<span class='btn btn-primary'>Захиалга хүргэгдэж байна <b>0</b> хүргэлтйн дараа<span>";
+            }else{
+                $title = "<span class='btn btn-dark'>Захиалга <b>$huleelt</b> хүргэлтйн дараа<span>";
+            }
+
+            return View::make('order.progress', ['orders' => $orders,'title' => $title,'phone'=>$phone]);
+
+        }else{
+
+        }
+
+    }
+
     public function setOrder(Request $request){
 
         $order = Order::find($request->order_id);
@@ -98,11 +135,12 @@ class orderController extends Controller
         foreach($order as $or){
             $obj = [
                 "address" => $or->address,
+                "phone" => $or->phone,
                 "duureg" => $duureg[$or->duureg],
                 "duureg_key" => $or->duureg,
                 "payment" => $or->payment(),
             ];
-            $response[$or->phone] = $obj;
+            $response[$or->address] = $obj;
         }
         return json_encode($response);
 

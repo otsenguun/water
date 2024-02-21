@@ -44,3 +44,5 @@ Route::post('confirmOrder', [App\Http\Controllers\orderController::class, 'confi
 
 Route::get('/searchOrder/{id}', [App\Http\Controllers\orderController::class, 'searchPhone'])->middleware('auth');
 Route::get('export-orders', [App\Http\Controllers\orderController::class, 'export'])->middleware('auth');
+
+Route::get('ShowOrderProcess/{phone}', [App\Http\Controllers\orderController::class, 'showOrderProcess'])->middleware('auth');

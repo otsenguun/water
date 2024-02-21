@@ -9,11 +9,19 @@
     </form>
 
 <hr>
-<a href="{{route('user.create')}}" class="btn btn-primary">Ажилтан бүртгэх</a>
-<a href="{{route('user.index')}}" class="btn btn-primary">Ажилтны жагсаалт</a>
+<label for="">Утас</label>
+
+<input type="text" value="" name="s_phone_order">
+<!-- <input type="text" value="" name="s_phone_order"> -->
+<button type="button" id="check_order" class="btn btn-success">Захиалга хянах</button>
+
 <a href="{{url('show_list')}}" class="btn btn-primary">Захиалга жагсаалт</a>
 <a href="{{url('not_list')}}" class="btn btn-primary">Хувиарлаагүй жагсаалт</a>
+@if(Auth::user()->id == 1)
+<a href="{{route('user.create')}}" class="btn btn-primary">Ажилтан бүртгэх</a>
+<a href="{{route('user.index')}}" class="btn btn-primary">Ажилтны жагсаалт</a>
 <a href="{{route('log.index')}}" class="btn btn-warning">Программын түүх</a>
+@endif
 <hr>
 @foreach($duureg as $d_key => $dg)
 <button class="btn btn-primary duureg_create" data_id= "{{$d_key}}"> {{$dg}} </button>
@@ -67,6 +75,24 @@
 <!-- Modal -->
 
 
+<div class="modal fade bd-example-modal-xl" id="ShowProcess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Төлөв харах</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="prog_body">
+        ...
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -85,6 +111,20 @@
   </div>
 </div>
 <script>
+
+    $("#check_order").click(function(){
+
+        var phone = $("input[name='s_phone_order']").val();
+
+        $.get("{{url('ShowOrderProcess')}}"+"/"+phone, function(data, status){
+            // alert("Data: " + data + "\nStatus: " + status);
+            $("#prog_body").html(data);
+            // console.log(data);
+        });
+
+        $('#ShowProcess').modal('show'); 
+
+    });
 
     $(".duureg_create").click(function(){
         let duureg = $(this).attr("data_id");
@@ -123,7 +163,7 @@
                     $("#search_val").empty();
                     let valhtml = "";
                     $.each( response, function( index,value ){
-                        valhtml += "<li phone= '"+ index +"' duureg_key= '"+ value.duureg_key +"' address= '"+ value.address +"' class='list-group-item btn btn-sm btn-info set_info'>"+index +" : " + value.duureg + " :" + value.address + ": "+value.payment +"</li>";
+                        valhtml += "<li phone= '"+ value.phone +"' duureg_key= '"+ value.duureg_key +"' address= '"+ value.address +"' class='list-group-item btn btn-sm btn-info set_info'>"+index +" : " + value.duureg + " :" + value.address + ": "+value.payment +"</li>";
                     });
                     $("#search_val").html(valhtml);
             });
