@@ -12,7 +12,12 @@
             <!-- Ус захиалах -->
         </div>
         <div class="card-body">
-             <center>  <i>Захиалга <a class="btn btn-info btn-sm" href="{{url('OrderPersonList')}}">Миний захиалга</a> <hr> <label for="">Утасны дугаар / <b>{{$person->phone}}</b>  / <a href="{{url('logoutPerson')}}" class="btn btn-warning btn-sm">Өөр хэрэглэгчээр нэвтрэх</a></label></i></center>
+             <center>  
+                <a class="btn btn-default btn-sm" href="{{url('OrderPersonList')}}">Миний захиалга</a> 
+                <a class="btn btn-primary btn-sm" href="{{url('OrderPerson')}}">Шинэ захиалга</a> 
+
+
+             <hr> <label for="">Утасны дугаар / <b>{{$person->phone}}</b>  / <a href="{{url('logoutPerson')}}" class="btn btn-warning btn-sm">Өөр хэрэглэгчээр нэвтрэх</a></label></center>
            
         <form action="confirmOrderPerson" method="post">
             @csrf
