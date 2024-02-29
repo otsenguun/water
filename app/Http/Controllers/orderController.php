@@ -55,7 +55,7 @@ class orderController extends Controller
         $order->phone = $request->phone;
         $order->duureg = $request->duureg;
         $order->address = $request->address;
-        $order->value = 1;
+        $order->value = $request->value;
         $order->info = "Онлайн захиалга";
         $order->c_user = 0;
         $order->d_user = 0;

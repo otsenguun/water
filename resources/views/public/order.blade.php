@@ -42,6 +42,8 @@
             </select>
             Хүлээн авах огноо
             <input type="date" name="d_date" value="{{date('Y-m-d')}}" class="form-control">
+            Усны тоо/ш
+            <input type="number" name="value" value="1" class="form-control">
             <br>
             <center>
 

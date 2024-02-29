@@ -27,6 +27,7 @@
                 <th>Хаяг</th>
                 <th>Дүүрэг</th>
                 <th>Утас</th>
+                <th>Ус тоо/ш</th>
                 <th>Төлөв</th>
                 @foreach($orders as $key => $order)
                 <tr>
@@ -35,6 +36,7 @@
                     <td>{{$order->address}}</td>
                     <td>{{$order->duureg()}}</td>
                     <td>{{$order->phone}}</td>
+                    <td>{{$order->value}}</td>
                     <td>{{$order->status()}}</td>
                 </tr>
                 @endforeach
