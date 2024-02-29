@@ -46,3 +46,14 @@ Route::get('/searchOrder/{id}', [App\Http\Controllers\orderController::class, 's
 Route::get('export-orders', [App\Http\Controllers\orderController::class, 'export'])->middleware('auth');
 
 Route::get('ShowOrderProcess/{phone}', [App\Http\Controllers\orderController::class, 'showOrderProcess'])->middleware('auth');
+
+
+Route::get('/CreateOrderPerson', [App\Http\Controllers\orderController::class, 'CreateOrderPerson']);
+Route::get("/RegisterPerson", [App\Http\Controllers\orderController::class, 'RegisterPerson']);
+Route::post("/RegisterPersonSubmit", [App\Http\Controllers\orderController::class, 'RegisterPersonSubmit']);
+Route::post("/LoginPerson", [App\Http\Controllers\orderController::class, 'LoginPerson']);
+Route::post("/confirmOrderPerson", [App\Http\Controllers\orderController::class, 'confirmOrderPerson']);
+
+Route::get("/OrderPerson", [App\Http\Controllers\orderController::class, 'OrderPerson']);
+Route::get("/logoutPerson", [App\Http\Controllers\orderController::class, 'logoutPerson']);
+Route::get("/OrderPersonList", [App\Http\Controllers\orderController::class, 'OrdersListPerson']);

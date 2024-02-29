@@ -54,14 +54,16 @@
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
+                                    Ажилны эрхээр нэвтрэх
                                 </button>
 
-                                @if (Route::has('password.request'))
+                                <!-- @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
-                                @endif
+                                @endif -->
+
+                                <a class="btn btn-success" href="{{url('OrderPerson')}}">Ус захиалах</a>
                             </div>
                         </div>
                     </form>

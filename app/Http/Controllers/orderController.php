@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Log;
+use App\Models\Person;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\OrdersExport;
+use Session;
 class orderController extends Controller
 {
     /**
@@ -28,6 +30,114 @@ class orderController extends Controller
     ];
 
 
+    public function OrdersListPerson(){
+
+        $per = Session::get('Person');
+
+        if(!isset($per)){
+            return redirect("OrderPerson");
+        }
+
+        $orders = Order::where("person_id",$per->id)->get();
+
+        return view("public.list",["orders" => $orders,"person" => $per]);
+
+
+    }
+
+    public function confirmOrderPerson(Request $request){
+        // dd($request);
+        $per = Session::get('Person');
+        if(!isset($per)){
+            return redirect("OrderPerson");
+        }
+        $order = new Order;
+        $order->phone = $request->phone;
+        $order->duureg = $request->duureg;
+        $order->address = $request->address;
+        $order->value = 1;
+        $order->info = "Онлайн захиалга";
+        $order->c_user = 0;
+        $order->d_user = 0;
+        $order->d_date = $request->d_date;
+        $order->payment = $request->payment;
+        $order->person_id = $request->person_id;
+        $order->isconfirmed = 1;
+        $order->save();
+
+        return redirect("OrderPersonList")->with(["info_text"=>"Захиалга хүлээж авлаа танд баяраллаа."]);
+
+    }
+
+    public function LogoutPerson(){
+
+        // session()->forget('key');
+        Session::forget('Person');
+        return redirect("OrderPerson");
+    }
+
+    public function OrderPerson(){
+
+        $per = Session::get('Person');
+        $payments = [
+            1 => "Бэлэн",
+            2 => "Данс / Карт"
+        ];
+        if(isset($per)){
+            return view("public.order",["person" => $per,"duuregs" => $this->duureg,"payments" => $payments]);
+        }else{
+            return redirect("CreateOrderPerson");
+        }
+
+    }
+
+    public function RegisterPersonSubmit(Request $request){
+
+        // return view("public.register_person");
+
+        $person = new Person;
+        $person->phone = $request->phone;
+        $person->password = $request->password;
+        $person->duureg = $request->duureg;
+        $person->address = $request->address;
+        $person->save();
+
+
+        Session::put('Person', $person);
+        return redirect("OrderPerson");
+
+    }
+
+    public function RegisterPerson(){
+
+        return view("public.register_person",["duuregs"=>$this->duureg]);
+
+    }
+    public function LoginPerson(Request $request){
+
+        $loginperson = Person::select("*")
+            ->where('phone',$request->phone)->get(1);
+
+        if(count($loginperson) > 0){
+            if($loginperson[0]->password == $request->password){
+                Session::put('Person', $loginperson[0]);
+                return redirect("OrderPerson");
+            }else{
+                // return view("public.person",["old_phone" => $request->phone,"info_text"=>"Нууц үг буруу байна"]);
+                return redirect("CreateOrderPerson")->with(["info_text"=>"Нууц үг буруу байна","old_phone" => $request->phone]);
+            }
+        }else{
+            return redirect("CreateOrderPerson")->with(["info_text"=>"Утасны дугаар бүртгэлгүй байна","old_phone" => $request->phone]);
+            // return view("public.person",["old_phone" => $request->phone,"info_text"=>"Утасны дугаар бүртгэлгүй байна"]);
+        }
+
+    }
+    public function CreateOrderPerson(){
+
+
+        return view("public.person");
+
+    }
     public function showOrderProcess($phone){
         
         $finds = Order::select("d_user","d_date",)
