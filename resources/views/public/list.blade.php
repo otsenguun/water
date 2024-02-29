@@ -12,7 +12,7 @@
             <!-- Ус захиалах -->
         </div>
         <div class="card-body">
-             <center>  <i>Миний захиалга <a class="btn btn-info btn-sm" href="{{url('OrderPerson')}}">Шинэ захиага өгөх</a> <hr> <label for="">Утасны дугаар / <b>{{$person->phone}}</b>  / <a href="{{url('logoutPerson')}}" class="btn btn-warning btn-sm">Өөр хэрэглэгчээр нэвтрэх</a></label></i></center>
+             <center>  <i>Миний захиалга <a class="btn btn-info btn-sm" href="{{url('OrderPerson')}}">Шинэ захиалга өгөх</a> <hr> <label for="">Утасны дугаар / <b>{{$person->phone}}</b>  / <a href="{{url('logoutPerson')}}" class="btn btn-warning btn-sm">Өөр хэрэглэгчээр нэвтрэх</a></label></i></center>
 
 
              <div class ="table-responsive">

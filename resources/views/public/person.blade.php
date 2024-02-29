@@ -12,7 +12,7 @@
             <!-- Ус захиалах -->
         </div>
         <div class="card-body">
-             <center>  <i>Бүртгэлтэй утасны дугаараар нэвтэрч орсоноор та ус захиалах боломжтой</i></center>
+             <center>  <i style="font-size:13px">Бүртгэлтэй утасны дугаараар нэвтэрч орсоноор та ус захиалах боломжтой</i></center>
            
         <form action="LoginPerson" method="post">
             @csrf
@@ -24,7 +24,7 @@
             <center>
 
             <input type="submit"  value="Нэвтрэх" class="btn btn-primary">
-            <p>Хэрэв та бүртгэлгүй бол  <a href="{{url('RegisterPerson')}}">Энд</a> дарж бүртгүүлнэ үү </p>
+            <p>Хэрэв та бүртгэлгүй бол  <b><a href="{{url('RegisterPerson')}}">Энд</a></b> дарж бүртгүүлнэ үү </p>
             </center>
             
         </form>

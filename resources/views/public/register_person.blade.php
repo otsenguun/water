@@ -12,7 +12,7 @@
             <!-- Ус захиалах -->
         </div>
         <div class="card-body">
-             <center>  <i>Бүртгэлтэй үүсгэх</i></center>
+             <center>  <i>Бүртгэл үүсгэх</i></center>
            
         <form action="RegisterPersonSubmit" method="post">
             @csrf
