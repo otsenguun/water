@@ -16,6 +16,7 @@
 <button type="button" id="check_order" class="btn btn-success">Захиалга хянах</button>
 
 <a href="{{url('show_list')}}" class="btn btn-primary">Захиалга жагсаалт</a>
+<a href="{{url('notConfirmedOrders')}}" class="btn btn-info">Онлайн захиалга</a>
 <a href="{{url('not_list')}}" class="btn btn-primary">Хувиарлаагүй жагсаалт</a>
 @if(Auth::user()->id == 1)
 <a href="{{route('user.create')}}" class="btn btn-primary">Ажилтан бүртгэх</a>

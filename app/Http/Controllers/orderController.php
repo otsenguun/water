@@ -30,6 +30,47 @@ class orderController extends Controller
     ];
 
 
+
+    public function confirmOrderOperator(Request $request){
+
+        if($request->type == "Батлах"){
+            // dd($request->type);
+            $order = Order::find($request->order_id);
+            $order->c_user = Auth::user()->id;
+            $order->isconfirmed = 2;
+            $order->save();
+            return redirect()->back()->with(["info_text"=> $request->order_id." дугаартай захиалга батлагдлаа."]);
+        }else{
+            $order = Order::find($request->order_id);
+            $order->c_user = Auth::user()->id;
+            $order->status = 2;
+            $order->save();
+            return redirect()->back()->with(["info_text"=> $request->order_id." дугаартай захиалга цуцлагдлаа."]);
+        }
+
+    }
+
+    public function NotConfirmerOrders(Request $request){
+        $sdate = date("Y-m-d");
+        if(!is_null($request->d_date)){
+            $sdate = $request->d_date;
+            // dd($request->date);
+        }
+        $duureg = $this->duureg;
+        if(Auth::user()->type == 1){
+            $orders = Order::where("d_user",0)
+            ->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)->where("isconfirmed",1)
+            ->orderBy('index', 'asc')->paginate(100);
+            return view("order.notset",['orders' => $orders,"duureg"=>$duureg,"request"=>$request]);
+        }else{
+            $users = User::select("id","name")->where("type",1)->get();
+            $orders = Order::where("d_user",0)->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)->where("isconfirmed",1)
+            ->orderBy('index', 'asc')->paginate(100);
+            return view("order.confirm",['orders' => $orders,"duureg"=>$duureg,"request"=>$request,"users" => $users]);
+
+        }
+    }
+
     public function OrdersListPerson(){
 
         $per = Session::get('Person');
@@ -65,7 +106,7 @@ class orderController extends Controller
         $order->isconfirmed = 1;
         $order->save();
 
-        return redirect("OrderPersonList")->with(["info_text"=>"Захиалга хүлээж авлаа танд баяраллаа."]);
+        return redirect("OrderPersonList")->with(["info_text"=>"Захиалга хүлээж авлаа танд баярлалаа."]);
 
     }
 
@@ -279,12 +320,12 @@ class orderController extends Controller
         $duureg = $this->duureg;
         if(Auth::user()->type == 1){
             $orders = Order::where("d_user",Auth::user()->id)
-            ->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)
+            ->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)->where("isconfirmed",2)
             ->orderBy('index', 'asc')->paginate(100);
             return view("order.list",['orders' => $orders,"duureg"=>$duureg,"request"=>$request]);
         }else{
             $users = User::select("id","name")->where("type",1)->get();
-            $orders = Order::withWhere($request->only('duureg','phone','d_user',"status"))->where("d_date",$sdate)
+            $orders = Order::withWhere($request->only('duureg','phone','d_user',"status"))->where("d_date",$sdate)->where("isconfirmed",2)
             ->orderBy('index', 'asc')->paginate(100);
             return view("order.listop",['orders' => $orders,"duureg"=>$duureg,"request"=>$request,"users" => $users]);
 
@@ -301,12 +342,12 @@ class orderController extends Controller
         $duureg = $this->duureg;
         if(Auth::user()->type == 1){
             $orders = Order::where("d_user",0)
-            ->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)
+            ->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)->where("isconfirmed",2)
             ->orderBy('index', 'asc')->paginate(100);
             return view("order.notset",['orders' => $orders,"duureg"=>$duureg,"request"=>$request]);
         }else{
             $users = User::select("id","name")->where("type",1)->get();
-            $orders = Order::where("d_user",0)->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)
+            $orders = Order::where("d_user",0)->withWhere($request->only('duureg','phone',"status"))->where("d_date",$sdate)->where("isconfirmed",2)
             ->orderBy('index', 'asc')->paginate(100);
             return view("order.notset",['orders' => $orders,"duureg"=>$duureg,"request"=>$request,"users" => $users]);
 

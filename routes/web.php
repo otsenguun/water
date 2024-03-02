@@ -57,3 +57,6 @@ Route::post("/confirmOrderPerson", [App\Http\Controllers\orderController::class,
 Route::get("/OrderPerson", [App\Http\Controllers\orderController::class, 'OrderPerson']);
 Route::get("/logoutPerson", [App\Http\Controllers\orderController::class, 'logoutPerson']);
 Route::get("/OrderPersonList", [App\Http\Controllers\orderController::class, 'OrdersListPerson']);
+
+Route::get("/notConfirmedOrders", [App\Http\Controllers\orderController::class, 'NotConfirmerOrders'])->middleware('auth');
+Route::post('confirmOrderOperator', [App\Http\Controllers\orderController::class, 'confirmOrderOperator'])->middleware('auth');

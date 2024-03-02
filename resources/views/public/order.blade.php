@@ -17,7 +17,7 @@
                 <a class="btn btn-primary btn-sm" href="{{url('OrderPerson')}}">Шинэ захиалга</a> 
 
 
-             <hr> <label for="">Утасны дугаар / <b>{{$person->phone}}</b>  / <a href="{{url('logoutPerson')}}" class="btn btn-warning btn-sm">Өөр хэрэглэгчээр нэвтрэх</a></label></center>
+             <hr> <label for="">Утасны дугаар / <b>{{$person->phone}}</b>  / <a href="{{url('logoutPerson')}}" class="btn btn-primary btn-sm">Өөр хэрэглэгчээр нэвтрэх</a></label></center>
            
         <form action="confirmOrderPerson" method="post">
             @csrf
@@ -41,9 +41,9 @@
                 @endforeach
             </select>
             Хүлээн авах огноо
-            <input type="date" name="d_date" value="{{date('Y-m-d')}}" class="form-control">
-            Усны тоо/ш
-            <input type="number" name="value" value="1" class="form-control">
+            <input type="date" name="d_date" value="{{date('Y-m-d',strtotime('+ 1 days'))}}" min="{{date('Y-m-d',strtotime('+ 1 days'))}}"  class="form-control">
+            Усны тоо/ш / <i>Бага даа 2ш ус захиалах боломжтой</i>/
+            <input type="number" name="value" value="2" min="2" class="form-control">
             <br>
             <center>
 
