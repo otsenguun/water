@@ -79,7 +79,7 @@ class orderController extends Controller
             return redirect("OrderPerson");
         }
 
-        $orders = Order::where("person_id",$per->id)->get();
+        $orders = Order::where("person_id",$per->id)->orderBy('id', 'desc')->paginate(20);
 
         return view("public.list",["orders" => $orders,"person" => $per]);
 
