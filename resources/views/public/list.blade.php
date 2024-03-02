@@ -24,33 +24,36 @@
              <table class="table">
                 <th>№</th>
                 <th>Хүргнэх огноо</th>
-                <th>Үүсгэсэн</th>
+                <th>Төлөв</th>
                 <!-- <th>Хаяг</th> -->
-                <th>Дүүрэг</th>
+              
                 <!-- <th>Утас</th> -->
                 <th>Ус тоо/ш</th>
-                <th>Төлөв</th>
+                <th>Дүүрэг</th>
+                <th>Үүсгэсэн</th>
                 @foreach($orders as $key => $order)
                 <tr>
                     <td>{{$key+1}}</td>
                     <td>{{$order->d_date}}</td>
-                    <td>{{$order->created_at}}</td>
+                    <td>
+                        
+                        @if($order->isconfirmed == 2 && $order->status == 0)
+                        <button class="btn btn-info btn-sm">Баталгаажсан</button> 
+                        @elseif($order->status == 1)
+                        <button class="btn btn-success btn-sm"> {{$order->status()}} </button> 
+                        @elseif($order->isconfirmed == 1 && $order->status == 0)
+                        <button class="btn btn-warning btn-sm"> {{$order->status()}} </button> 
+                        @else
+                        <button class="btn btn-danger btn-sm"> {{$order->status()}} </button> 
+                        @endif
+                        </td>
+                    <td>{{$order->value}}</td>
                     <!-- <td>{{$order->address}}</td> -->
                     <td>{{$order->duureg()}}</td>
                     <!-- <td>{{$order->phone}}</td> -->
-                    <td>{{$order->value}}</td>
-                    <td>
-                        
-                    @if($order->isconfirmed == 2 && $order->status == 0)
-                    <button class="btn btn-info btn-sm">Баталгаажсан</button> 
-                    @elseif($order->status == 1)
-                    <button class="btn btn-success btn-sm"> {{$order->status()}} </button> 
-                    @elseif($order->isconfirmed == 1 && $order->status == 0)
-                    <button class="btn btn-warning btn-sm"> {{$order->status()}} </button> 
-                    @else
-                    <button class="btn btn-danger btn-sm"> {{$order->status()}} </button> 
-                    @endif
-                    </td>
+                   
+                    <td>{{$order->created_at}}</td>
+                   
                 </tr>
                 @endforeach
              </table>
