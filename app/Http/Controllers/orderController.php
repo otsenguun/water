@@ -409,6 +409,7 @@ class orderController extends Controller
         $order->c_user = $request->c_user;
         $order->d_user = intval($request->d_user);
         $order->d_date = $request->d_date;
+        $order->isconfirmed = 2;
         $order->payment = $request->payment;
         $order->save();
 
