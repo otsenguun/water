@@ -14,14 +14,14 @@
         margin:5px;
     }
    .custom_table{
-        font-size: 11px;
-        line-height: 10px;
+        font-size: 9px;
+        line-height: 5px;
    }
    .custom_table button{
-        font-size: 10px;
+        font-size: 7px;
    }
    .custom_table span{
-        font-size: 10px;
+        font-size: 7px;
    }
  
 </style>
@@ -97,10 +97,10 @@
                             <thead>
                                 <th>№</th>
                                     <th>Утасны дугаар</th>
-                                    <th>Дүүрэг</th>
+                                    <!-- <th>Дүүрэг</th> -->
                                     <th style="min-width: 300px">Хаяг</th>
                                     <th>Усны тоо</th>
-                                    <th style="min-width: 300px">Тайлбар</th>
+                                    <!-- <th style="min-width: 100px">Тайлбар</th> -->
                                     <th style="min-width: 100px">Хүргэх огноо</th>
                                     <th style="min-width: 250px">Төлөв</th>
                                     <th>Төлбөр</th>
@@ -112,10 +112,10 @@
                                     <tr class="index" data_id="{{$order->id}}">
                                         <td class="cursor"> <i class="fa-solid fa-down-left-and-up-right-to-center"></i> </td>
                                         <td>{{$order->phone}}</td>
-                                        <td>{{$duureg[$order->duureg]}}</td>
+                                        <!-- <td>{{$duureg[$order->duureg]}}</td> -->
                                         <td>{{$order->address}}</td>
                                         <td class="values">{{$order->value}}</td>
-                                        <td>{{$order->info}}</td>
+                                        <!-- <td>{{$order->info}}</td> -->
                                         <td>{{$order->d_date}}</td>
                                         <td>
 
